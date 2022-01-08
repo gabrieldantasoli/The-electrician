@@ -12,8 +12,15 @@ let distance = (canvas.height - padding) / cable.length;
 let leftcables = sortcables();
 let rightcables = sortcables();
 leftcablescoordinates();
+rightcablescoordinates();
 
 let lineWidth = 4;
+
+const mousePos = {
+    x: 0,
+    y: 0,
+    isclicked: false,
+}
 
 function main() {
     clearCanvas();
@@ -75,12 +82,21 @@ function sortcables() {
     })
 }
 
+function rightcablescoordinates() {
+    rightcables.forEach((cab,index) => {
+        cab.x = canvas.width +10 - cablewidth;
+        cab.y = distance * (index + 1);
+        cab.w = cablewidth - (12);
+        cab.h = cablesize - (2);
+    });
+}
+
 function leftcablescoordinates() {
     leftcables.forEach((cab,index) => {
-        cab.x = lineWidth/2;
+        cab.x = 2;
         cab.y = distance * (index + 1);
-        cab.w = cablewidth - (lineWidth / 2);
-        cab.h = cablesize - (lineWidth / 2);
+        cab.w = cablewidth - (10);
+        cab.h = cablesize - (2);
     });
 }
 
@@ -91,7 +107,14 @@ function drawcables() {
         ctx.lineWidth = lineWidth;
         ctx.fillRect(cab.x,cab.y,cab.w,cab.h);
         ctx.strokeRect(cab.x,cab.y,cab.w,cab.h);
-    })
+    });
+    rightcables.forEach(cab => {
+        ctx.fillStyle = cab.color;
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = lineWidth;
+        ctx.fillRect(cab.x,cab.y,cab.w,cab.h);
+        ctx.strokeRect(cab.x,cab.y,cab.w,cab.h);
+    });
 }
 
 main()
