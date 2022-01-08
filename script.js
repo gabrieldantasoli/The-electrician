@@ -16,11 +16,37 @@ rightcablescoordinates();
 
 let lineWidth = 4;
 
+const taskstate = {
+    selectedcable : null    
+}
+
 const mousePos = {
     x: 0,
     y: 0,
     isclicked: false,
 }
+
+canvas.addEventListener('mousedown',(e) => {
+    mousePos.x = e.layerX;
+    mousePos.y = e.layerY;
+    mousePos.isclicked = true;
+
+    checkcolorselected();
+})  
+
+canvas.addEventListener('mouseup',(e) => {
+    mousePos.isclicked = false;
+    taskstate.selectedcolor = null
+})
+
+canvas.addEventListener('mousemove',(e) => {
+    if (mousePos.isclicked){
+        mousePos.x = layerX;
+        mousePos.y = layerY;
+    }
+})
+
+
 
 function main() {
     clearCanvas();
@@ -28,7 +54,7 @@ function main() {
     drawLeftHandle();
     drawRightHandle();
     drawcables();
-
+    drawcableligature();
 
     requestAnimationFrame(main);
 }
@@ -116,5 +142,20 @@ function drawcables() {
         ctx.strokeRect(cab.x,cab.y,cab.w,cab.h);
     });
 }
+
+function checkcolorselected() {
+    leftcables.forEach(cab => {
+        if (
+            cab.x < mousePos.x &&
+            cab.x + cab.w > mousePos.x &&
+            cab.y < mousePos.y &&
+            cab.y + cab.h > mousePos.y
+        ) {
+            taskstate.selectedcable = cab;
+        }
+    });
+}
+
+
 
 main()
