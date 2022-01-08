@@ -41,8 +41,8 @@ canvas.addEventListener('mouseup',(e) => {
 
 canvas.addEventListener('mousemove',(e) => {
     if (mousePos.isclicked){
-        mousePos.x = layerX;
-        mousePos.y = layerY;
+        mousePos.x = e.layerX;
+        mousePos.y = e.layerY;
     }
 })
 
@@ -156,6 +156,19 @@ function checkcolorselected() {
     });
 }
 
-
+function drawcableligature() {
+    if (mousePos.isclicked && taskstate.selectedcable) {
+        const selectedcable = taskstate.selectedcable;
+        ctx.beginPath();
+        ctx.strokeStyle = '#000';
+        ctx.moveTo(selectedcable.x + selectedcable.w + lineWidth / 2, selectedcable.y);
+        ctx.lineTo(mousePos.x,mousePos.y - cablesize / 2);
+        ctx.lineTo(mousePos.x,mousePos.y + cablesize / 2);
+        ctx.lineTo(selectedcable.x + selectedcable.w + lineWidth / 2,selectedcable.y + selectedcable.h);
+        ctx.fillStyle = selectedcable.color;
+        ctx.fill()
+        ctx.stroke();
+    }
+}
 
 main()
