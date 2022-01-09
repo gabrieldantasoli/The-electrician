@@ -35,10 +35,24 @@ canvas.addEventListener('mousedown',(e) => {
     mousePos.isclicked = true;
 
     checkcolorselected();
+})
+
+canvas.addEventListener('touchstart',(e) => {
+    mousePos.x = Math.floor(e.touches[0].clientX);
+    mousePos.y = Math.floor(e.touches[0].clientY);
+    mousePos.isclicked = true;
+
+    checkcolorselected();
 })  
 
 //mouseup
 canvas.addEventListener('mouseup',(e) => {
+    checcabledroped();
+    mousePos.isclicked = false;
+    taskstate.selectedcolor = null
+})
+
+canvas.addEventListener('touchend',(e) => {
     checcabledroped();
     mousePos.isclicked = false;
     taskstate.selectedcolor = null
@@ -51,6 +65,13 @@ canvas.addEventListener('mousemove',(e) => {
         mousePos.y = e.layerY;
     }
 })
+
+canvas.addEventListener('touchmove',(e) => {
+    if (mousePos.isclicked){
+      mousePos.x = Math.floor(e.touches[0].clientX);
+    mousePos.y = Math.floor(e.touches[0].clientY);
+    }
+});
 
 
 
@@ -182,6 +203,12 @@ function checcabledroped() {
                     document.getElementById('divone').classList.remove('active');
                     document.getElementById('p').textContent = 'task completed';
                     document.getElementById('p').style.color = 'green';
+                    document.getElementById('canvas').style.pointerEvents= 'none';
+                    document.querySelector('header').style.display = 'block';
+                    document.querySelector('#h2').style.display = 'block';
+                    document.querySelector('footer').style.display = 'block';
+                    document.querySelector('#divone').style.display = 'block';
+                    document.querySelector('#link').style.display = 'flex';
                     make1();
                 }
             }
@@ -230,6 +257,12 @@ function make(){
     document.getElementById('divone').classList.add('active');
     document.getElementById('open').style.display = 'none';
     document.getElementById('close').style.display = 'block';
+    if (window.innerWidth < 800 && completetask != 6){
+      document.querySelector('header').style.display = 'none';
+      document.querySelector('#h2').style.display = 'none';
+      document.querySelector('footer').style.display = 'none';
+      document.querySelector('#divone').style.display = 'none';
+    }
 }
 
 function make1(){

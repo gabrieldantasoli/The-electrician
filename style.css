@@ -98,3 +98,20 @@ footer p a:hover{
 #close{
     display: none;
 }
+body > a{
+    display: none;
+    text-decoration: none;
+    justify-content: center;
+}
+body > a > i{
+    margin: 1rem 0;
+    font-size: 6rem;
+    color: black;
+}
+
+@media (max-width: 800px) {
+    .active{
+        margin-bottom: 600px;
+        transform: translateY(600px);
+    }
+}
