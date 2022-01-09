@@ -43,10 +43,16 @@ section > div > div:nth-child(1){
     height: 600px;
     left: calc(50% - 200px);
     z-index: 1;
+    transition: 1s linear;
 }
 section > div > div:nth-child(1) i{
     margin-top: 3rem;
     font-size: 12rem;
+}
+section > div > div:nth-child(1) p{
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    color: red;
 }
 section > div > div:nth-child(1) h3{
     margin-top: 1.8rem;
@@ -61,9 +67,12 @@ section > div > div:nth-child(1) button{
     padding: .5rem 2rem;
     border-radius: .5rem;
 }
+.active{
+    transform: translateX(-400px);
+}
 #canvas{
     position: absolute;
-    transform: translatex(0);
+    transform: translateY(0);
     z-index: 0;
     left: calc(50% - 200px);
 }

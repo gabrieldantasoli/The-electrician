@@ -174,6 +174,12 @@ function checcabledroped() {
         ) {
             if (cab.color === taskstate.selectedcable.color){
                 taskstate.linkedcables.push(cab);
+                completetask += 1;
+                if (completetask == 6){
+                    document.getElementById('divone').classList.remove('active');
+                    document.getElementById('p').textContent = 'task completed';
+                    document.getElementById('p').style.color = 'green';
+                }
             }
         }
     });
@@ -212,3 +218,9 @@ function drawlinkedcable() {
 }
 
 main()
+
+document.getElementById('open').addEventListener('click',make)
+
+function make(){
+    document.getElementById('divone').classList.add('active');
+}
