@@ -8,6 +8,7 @@ let cablesize = 26;
 let cablewidth = 60; 
 let padding = 120;
 let distance = (canvas.height - padding) / cable.length;
+let completetask = 0;
 
 let leftcables = sortcables();
 let rightcables = sortcables();
@@ -17,7 +18,8 @@ rightcablescoordinates();
 let lineWidth = 4;
 
 const taskstate = {
-    selectedcable : null    
+    selectedcable : null,
+    linkedcables: []
 }
 
 const mousePos = {
@@ -35,6 +37,7 @@ canvas.addEventListener('mousedown',(e) => {
 })  
 
 canvas.addEventListener('mouseup',(e) => {
+    checcabledroped();
     mousePos.isclicked = false;
     taskstate.selectedcolor = null
 })
@@ -55,6 +58,8 @@ function main() {
     drawRightHandle();
     drawcables();
     drawcableligature();
+    drawlinkedcable();
+   
 
     requestAnimationFrame(main);
 }
@@ -145,6 +150,9 @@ function drawcables() {
 
 function checkcolorselected() {
     leftcables.forEach(cab => {
+        if (taskstate.linkedcables.find(lcab => lcab.color === cab.color)){
+            return;
+        }
         if (
             cab.x < mousePos.x &&
             cab.x + cab.w > mousePos.x &&
@@ -152,6 +160,21 @@ function checkcolorselected() {
             cab.y + cab.h > mousePos.y
         ) {
             taskstate.selectedcable = cab;
+        }
+    });
+}
+
+function checcabledroped() {
+    rightcables.forEach(cab => {
+        if (
+            cab.x < mousePos.x &&
+            cab.x + cab.w > mousePos.x &&
+            cab.y < mousePos.y &&
+            cab.y + cab.h > mousePos.y
+        ) {
+            if (cab.color === taskstate.selectedcable.color){
+                taskstate.linkedcables.push(cab);
+            }
         }
     });
 }
@@ -169,6 +192,23 @@ function drawcableligature() {
         ctx.fill()
         ctx.stroke();
     }
+}
+
+function drawlinkedcable() {
+    taskstate.linkedcables.forEach(endcab => {
+        const begincable = leftcables.find(cab => cab.color === endcab.color);
+        if (begincable){
+            ctx.beginPath();
+            ctx.strokeStyle = '#000';
+            ctx.moveTo(begincable.x + begincable.w + lineWidth / 2, begincable.y);
+            ctx.lineTo(endcab.x,endcab.y);
+            ctx.lineTo(endcab.x,endcab.y + cablesize -lineWidth / 2);
+            ctx.lineTo(begincable.x + begincable.w + lineWidth / 2,begincable.y + begincable.h);
+            ctx.fillStyle = begincable.color;
+            ctx.fill()
+            ctx.stroke();
+        }
+    });
 }
 
 main()
