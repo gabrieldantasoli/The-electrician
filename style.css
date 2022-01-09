@@ -66,6 +66,7 @@ section > div > div:nth-child(1) button{
     border: none;
     padding: .5rem 2rem;
     border-radius: .5rem;
+    margin: auto;
 }
 .active{
     transform: translateX(-400px);
@@ -93,4 +94,7 @@ footer p a{
 }
 footer p a:hover{
     text-shadow: 0 .1rem .5rem;
+}
+#close{
+    display: none;
 }

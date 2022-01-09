@@ -28,6 +28,7 @@ const mousePos = {
     isclicked: false,
 }
 
+//mousedown
 canvas.addEventListener('mousedown',(e) => {
     mousePos.x = e.layerX;
     mousePos.y = e.layerY;
@@ -36,12 +37,14 @@ canvas.addEventListener('mousedown',(e) => {
     checkcolorselected();
 })  
 
+//mouseup
 canvas.addEventListener('mouseup',(e) => {
     checcabledroped();
     mousePos.isclicked = false;
     taskstate.selectedcolor = null
 })
 
+//mousemove
 canvas.addEventListener('mousemove',(e) => {
     if (mousePos.isclicked){
         mousePos.x = e.layerX;
@@ -179,6 +182,7 @@ function checcabledroped() {
                     document.getElementById('divone').classList.remove('active');
                     document.getElementById('p').textContent = 'task completed';
                     document.getElementById('p').style.color = 'green';
+                    make1();
                 }
             }
         }
@@ -219,8 +223,17 @@ function drawlinkedcable() {
 
 main()
 
-document.getElementById('open').addEventListener('click',make)
+document.getElementById('open').addEventListener('click',make);
+document.getElementById('close').addEventListener('click',make1);
 
 function make(){
     document.getElementById('divone').classList.add('active');
+    document.getElementById('open').style.display = 'none';
+    document.getElementById('close').style.display = 'block';
+}
+
+function make1(){
+    document.getElementById('divone').classList.remove('active');
+    document.getElementById('close').style.display = 'none';
+    document.getElementById('open').style.display = 'block';
 }
